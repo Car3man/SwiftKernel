@@ -59,7 +59,7 @@ namespace SwiftKernelUnity.Core {
             var mth = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
             var cls = mth.ReflectedType.Name;
 
-            string guid = cls + callback.Method.Name;
+            string guid = "Event" + cls + callback.Method.Name;
 
             eventCallbacks.Add(guid, callback);
             onceCallbackDictionary.Add(guid, onceCallback);
@@ -71,7 +71,7 @@ namespace SwiftKernelUnity.Core {
             var mth = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
             var cls = mth.ReflectedType.Name;
 
-            string guid = cls + callback.Method.Name;
+            string guid = "Response" + cls + callback.Method.Name;
 
             responseCallbacks.Add(guid, callback);
             onceCallbackDictionary.Add(guid, onceCallback);
@@ -81,10 +81,12 @@ namespace SwiftKernelUnity.Core {
 
         public void RemoveEventObserver(string guid) {
             if(eventCallbacks.ContainsKey(guid)) eventCallbacks.Remove(guid);
+            if (onceCallbackDictionary.ContainsKey(guid)) onceCallbackDictionary.Remove(guid);
         }
 
         public void RemoveResponseObserver(string guid) {
             if(responseCallbacks.ContainsKey(guid)) responseCallbacks.Remove(guid);
+            if (onceCallbackDictionary.ContainsKey(guid)) onceCallbackDictionary.Remove(guid);
         }
     }
 }
