@@ -16,7 +16,7 @@ namespace SwiftKernelUnity.Core {
             new Dictionary<string, bool>();
 
         public void DoHandleEvent(byte[] data, string networkID) {
-            if(string.IsNullOrEmpty(networkID)) Debug.Log("empty networkID");
+            if(string.IsNullOrEmpty(networkID)) Debug.Log("unknow networkID - " + networkID);
 
             if(eventCallbacks.ContainsKey(networkID)) {
                 eventCallbacks[networkID].Invoke(data);
@@ -31,12 +31,12 @@ namespace SwiftKernelUnity.Core {
                     onceCallbackDictionary.Remove(networkID);
                 }
             } else {
-                Debug.Log("unknow networkID");
+                Debug.Log("unknow networkID - " + networkID);
             }
         }
 
         public void DoHandleResponse(byte[] data, string networkID) {
-            if(string.IsNullOrEmpty(networkID)) Debug.Log("empty networkID");
+            if(string.IsNullOrEmpty(networkID)) Debug.Log("unknow networkID - " + networkID);
 
             if(responseCallbacks.ContainsKey(networkID)) {
                 responseCallbacks[networkID].Invoke(data);
@@ -51,7 +51,7 @@ namespace SwiftKernelUnity.Core {
                     onceCallbackDictionary.Remove(networkID);
                 }
             } else {
-                Debug.Log("unknow networkID");
+                Debug.Log("unknow networkID - " + networkID);
             }
         }
 
