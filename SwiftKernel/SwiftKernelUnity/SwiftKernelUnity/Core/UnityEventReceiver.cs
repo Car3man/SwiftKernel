@@ -55,11 +55,15 @@ namespace SwiftKernelUnity.Core {
             }
         }
 
-        public string AddEventObserver(Action<byte[]> callback, bool onceCallback) {
-            var mth = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
-            var cls = mth.ReflectedType.Name;
+        public string AddEventObserver(Action<byte[]> callback, bool onceCallback, string id = "") {
+            string guid = id;
 
-            string guid = "Event" + cls + callback.Method.Name;
+            if (string.IsNullOrEmpty(id)) {
+                var mth = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
+                var cls = mth.ReflectedType.Name;
+
+                guid = "Event" + cls + callback.Method.Name;
+            }
 
             eventCallbacks.Add(guid, callback);
             onceCallbackDictionary.Add(guid, onceCallback);
@@ -67,11 +71,15 @@ namespace SwiftKernelUnity.Core {
             return guid;
         }
 
-        public string AddResponseObserver(Action<byte[]> callback, bool onceCallback) {
-            var mth = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
-            var cls = mth.ReflectedType.Name;
+        public string AddResponseObserver(Action<byte[]> callback, bool onceCallback, string id = "") {
+            string guid = id;
 
-            string guid = "Response" + cls + callback.Method.Name;
+            if (string.IsNullOrEmpty(id)) {
+                var mth = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
+                var cls = mth.ReflectedType.Name;
+
+                guid = "Response" + cls + callback.Method.Name;
+            }
 
             responseCallbacks.Add(guid, callback);
             onceCallbackDictionary.Add(guid, onceCallback);
