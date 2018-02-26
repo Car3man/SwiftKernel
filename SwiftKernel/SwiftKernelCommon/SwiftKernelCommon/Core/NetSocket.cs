@@ -86,7 +86,7 @@ namespace SwiftKernelCommon.Core {
             }
         }
 
-        public bool Bind(int port, bool reuseAddress)
+        public bool Bind(IPAddress ip, int port, bool reuseAddress)
         {
             _udpSocketv4 = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             _udpSocketv4.Blocking = true;
@@ -108,7 +108,7 @@ namespace SwiftKernelCommon.Core {
                 NetUtils.DebugWriteError("Broadcast error: {0}", e.ToString());
             }
 
-            if (!BindSocket(_udpSocketv4, new IPEndPoint(IPAddress.Any, port)))
+            if (!BindSocket(_udpSocketv4, new IPEndPoint(ip, port)))
             {
                 return false;
             }

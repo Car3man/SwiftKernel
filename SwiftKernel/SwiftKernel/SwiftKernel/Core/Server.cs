@@ -5,6 +5,8 @@ using SwiftKernelCommon.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.IO;
+using System.Net;
 
 namespace SwiftKernel.Core {
     public class SwiftKernelServer {
@@ -13,8 +15,15 @@ namespace SwiftKernel.Core {
         private Thread threadEventReceiver;
         private bool isRunning = false;
 
+        private IPAddress ip;
         private int port;
         private string connectionKey;
+
+        public IPAddress Ip {
+            get {
+                return ip;
+            }
+        }
 
         public int Port {
             get {
@@ -35,7 +44,8 @@ namespace SwiftKernel.Core {
 
         #region Public API
 
-        public virtual void Setup(int port, string connectionKey) {
+        public virtual void Setup(IPAddress ip, int port, string connectionKey) {
+            this.ip = ip;
             this.port = port;
             this.connectionKey = connectionKey;
         }
@@ -45,7 +55,8 @@ namespace SwiftKernel.Core {
 
             listener = new EventBasedNetListener();
             server = new NetManager(listener, 1000, connectionKey);
-            server.Start(port);
+
+            server.Start(ip, port);
 
             listener.PeerConnectedEvent += Listener_PeerConnectedEvent;
             listener.PeerDisconnectedEvent += Listener_PeerDisconnectedEvent;

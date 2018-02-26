@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading;
 using SwiftKernelCommon.Core.Utils;
@@ -755,14 +756,14 @@ namespace SwiftKernelCommon.Core {
         /// </summary>
         public bool Start()
         {
-            return Start(0);
+            return Start(IPAddress.Any, 0);
         }
 
         /// <summary>
         /// Start logic thread and listening on selected port
         /// </summary>
         /// <param name="port">port to listen</param>
-        public bool Start(int port)
+        public bool Start(IPAddress ip, int port)
         {
             if (IsRunning)
             {
@@ -770,7 +771,7 @@ namespace SwiftKernelCommon.Core {
             }
 
             _netEventsQueue.Clear();
-            if (!_socket.Bind(port, ReuseAddress))
+            if (!_socket.Bind(ip, port, ReuseAddress))
                 return false;
 
             _logicThread.Start();

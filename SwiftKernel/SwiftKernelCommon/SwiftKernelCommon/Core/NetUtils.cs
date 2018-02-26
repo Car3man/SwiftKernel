@@ -70,7 +70,7 @@ namespace SwiftKernelCommon.Core {
 
             //Create and start socket
             socket = new NetSocket(onReceive);
-            socket.Bind(0, false);
+            socket.Bind(IPAddress.Any, 0, false);
 
             //Send request
             int errorCode = 0;
